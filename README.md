@@ -34,19 +34,19 @@ The final outcome shows how clean data can be used to produce **clear, meaningfu
 
 The overall workflow follows a structured pipeline:
 
-Raw Dataset (CSV)
+1.Raw Dataset (CSV)
 
 
-SQL Server (Data Cleaning & Transformation using T-SQL)
+2.SQL Server (Data Cleaning & Transformation using T-SQL)
 
 
-Validated & Structured Tables
+3.Validated & Structured Tables
 
 
-Power BI (Data Modelling & Visualization)
+4.Power BI (Data Modelling & Visualization)
 
 
-Interactive Dashboards & Reports
+5.Interactive Dashboards & Reports
 
 Each step was carefully executed to ensure that the transition from raw data to final insights remained consistent and accurate.
 
