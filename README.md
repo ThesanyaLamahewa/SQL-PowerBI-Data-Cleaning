@@ -1,128 +1,229 @@
-# 🗄️ SQL Data Cleaning & Power BI Visualization — ADSC41 Assignment 3
 
-> **Course:** ADSC41 — Data Science (1st Year, 2nd Semester)  
-> **Team:** CodeCrushers  
-> **Tools:** Microsoft SQL Server (T-SQL) · Power BI · CSV Datasets
+# SQL Data Cleaning & Power BI Visualization
 
----
-
-## 📌 Project Overview
-
-This project demonstrates end-to-end **data wrangling and business intelligence** using two real-world datasets. We applied T-SQL for data cleaning and transformation, then built interactive Power BI dashboards to uncover meaningful insights.
+### Data Wrangling and Business Intelligence Project
 
 ---
 
-## 📁 Repository Structure
+## 1. Project Overview
+
+This project presents a complete workflow for transforming raw datasets into meaningful business insights using **SQL Server and Power BI**.
+
+Two real-world datasets were used to demonstrate practical data handling challenges, including missing values, inconsistent formats, and invalid entries. The cleaned datasets were then visualized through interactive dashboards to highlight trends and patterns relevant to decision-making.
+
+The work reflects a strong focus on **data preparation, accuracy, and insight generation**, which are critical stages in any data-driven project.
+
+---
+
+## 2. System Purpose
+
+Raw data is rarely ready for analysis. In most real-world scenarios, datasets contain inconsistencies that can lead to misleading insights if not handled properly.
+
+This project was carried out to demonstrate how structured data cleaning using SQL can:
+
+* Improve data reliability and consistency
+* Handle missing and invalid values effectively
+* Standardize formats for analysis
+* Prepare datasets for visualization tools
+
+The final outcome shows how clean data can be used to produce **clear, meaningful, and actionable visual insights** in Power BI.
+
+---
+
+## 3. Core Workflow Design
+
+The overall workflow follows a structured pipeline:
+
+Raw Dataset (CSV)
+
+
+SQL Server (Data Cleaning & Transformation using T-SQL)
+
+
+Validated & Structured Tables
+
+
+Power BI (Data Modelling & Visualization)
+
+
+Interactive Dashboards & Reports
+
+Each step was carefully executed to ensure that the transition from raw data to final insights remained consistent and accurate.
+
+---
+
+## 4. Dataset Handling Approach
+
+### Task 1 - National Passenger Travel
+
+This dataset focuses on transport trends across different modes such as passenger cars, buses, rail, and air.
+
+Key cleaning steps included:
+
+* Handling missing values across multiple columns
+* Identifying and correcting invalid (negative) values
+* Replacing NULL values with appropriate defaults
+* Removing records that did not contribute meaningful information
+* Verifying the dataset after cleaning
+
+The final dataset was structured to support time-based trend analysis in Power BI.
+
+---
+
+### Task 2 - Jobs & Employment Data
+
+This dataset contained employment statistics with formatting inconsistencies and placeholder values.
+
+Key cleaning steps included:
+
+* Converting placeholder values (e.g., `"--"`) into NULL
+* Standardizing text fields for consistency
+* Cleaning numeric columns by removing formatting issues (commas, strings)
+* Converting data types into usable numeric formats
+* Renaming and restructuring columns for clarity
+
+This resulted in a dataset suitable for comparative and regional analysis.
+
+---
+
+## 5. Technical Implementation
+
+The project primarily relied on **T-SQL** for data preparation.
+
+Key techniques applied:
+
+* NULL handling using `IS NULL`, `NULLIF()`, and `COALESCE()`
+* Data validation and filtering
+* String cleaning and transformation
+* Type conversion using `TRY_CAST()`
+* Schema modification using `ALTER TABLE`
+* Column renaming and restructuring
+
+These operations ensured that both datasets were clean, consistent, and analysis-ready.
+
+---
+
+## 6. Technology Stack
+
+**Data Processing**
+
+* Microsoft SQL Server
+* T-SQL
+
+**Data Visualization**
+
+* Microsoft Power BI
+
+**Data Source Format**
+
+* CSV files
+
+---
+
+## 7. Key Features
+
+* Structured data cleaning using SQL queries
+* Handling of real-world messy datasets
+* Transformation of raw data into analysis-ready format
+* Interactive Power BI dashboards
+* Clear visualization of trends and comparisons
+* End-to-end data workflow from ingestion to insight
+
+---
+
+## 8. Project Structure
 
 ```
-📦 SQL-PowerBI-Assignment3
- ┣ 📂 T-SQL_Queries
- ┃ ┣ 📄 Task 01.sql          # Data cleaning — National Passenger Travel dataset
- ┃ ┗ 📄 Task 02.sql          # Data cleaning — Jobs/Employment dataset
- ┣ 📂 SQL_Assignment3_Datasets
- ┃ ┣ 📄 National Passenger Travel.csv
- ┃ ┗ 📄 Jobs.csv
- ┣ 📂 Power_BI_Dashboards
- ┃ ┣ 📄 Task 01.pbix          # Travel trends dashboard
- ┃ ┗ 📄 Task 02.pbix          # Employment statistics dashboard
- ┣ 📂 Power_BI_Reports
- ┃ ┣ 📄 Task 01.pbix
- ┃ ┗ 📄 Task 02.pbix
- ┣ 📂 SQL_Assignment3_Report.pdf
- ┃ ┣ 📄 Task 1.pdf            # Full written report — Task 1
- ┃ ┗ 📄 Task 2.pdf            # Full written report — Task 2
- ┗ 📄 README.md
+SQL-PowerBI-Assignment3/
+│
+├── T-SQL_Queries/
+│   ├── Task 01.sql
+│   └── Task 02.sql
+│
+├── SQL_Assignment3_Datasets/
+│   ├── National Passenger Travel.csv
+│   └── Jobs.csv
+│
+├── Power_BI_Dashboards/
+│   ├── Task 01.pbix
+│   └── Task 02.pbix
+│
+├── Power_BI_Reports/
+│   ├── Task 01.pbix
+│   └── Task 02.pbix
+│
+├── SQL_Assignment3_Report/
+│   ├── Task 1.pdf
+│   └── Task 2.pdf
+│
+└── README.md
 ```
 
 ---
 
-## 🧹 Task 1 — National Passenger Travel Data Cleaning
+## 9. Usage Guide
 
-**Dataset:** `National Passenger Travel.csv`  
-**Database:** `Travel` (restored from `.bak`)
-
-### What we did:
-- ✅ Identified and handled **NULL values** across all transport mode columns (Passenger Cars, Buses, Rail, Air, Other, Total)
-- ✅ Validated **data ranges** — flagged and handled negative values
-- ✅ Replaced missing numerical values with `0` using `UPDATE` statements
-- ✅ Removed irrelevant records where `Total = 0`
-- ✅ Final verification query to confirm clean dataset
-
-### Key T-SQL Techniques Used:
-```sql
--- Detect missing values
-SELECT * FROM dbo.[Travel]
-WHERE [Passenger_cars] IS NULL OR [Rail] IS NULL ...;
-
--- Fill NULLs with 0
-UPDATE dbo.[Travel]
-SET [Passenger_cars] = 0
-WHERE [Passenger_cars] IS NULL;
-
--- Remove zero-total rows
-DELETE FROM dbo.[Travel] WHERE [Total] = 0;
-```
+1. Open SQL Server Management Studio
+2. Import the provided CSV datasets into the database
+3. Execute the T-SQL scripts in the `T-SQL_Queries` folder
+4. Verify the cleaned data tables
+5. Open the `.pbix` files using Power BI Desktop
+6. Explore the dashboards and interact with filters and visuals
 
 ---
 
-## 💼 Task 2 — Jobs & Employment Data Cleaning
+## 10. Dashboard Insights
 
-**Dataset:** `Jobs.csv`  
-**Database:** `Task 02`
+The Power BI dashboards were designed to highlight key findings from both datasets:
 
-### What we did:
-- ✅ Replaced placeholder `'--'` strings with proper `NULL` using `NULLIF()`
-- ✅ Standardised text fields with `TRIM()` and `LOWER()`
-- ✅ Cleaned numeric columns by removing commas and casting to `INT` using `TRY_CAST()` and `COALESCE()`
-- ✅ Removed redundant/duplicate columns with `ALTER TABLE DROP COLUMN`
-- ✅ Renamed columns for consistency using `sp_rename`
-- ✅ Changed column data types to `INT` using `ALTER COLUMN`
+* Transport usage patterns across different modes
+* Variations and trends over time
+* Employment distribution across regions
+* Comparative analysis of workforce data
 
-### Key T-SQL Techniques Used:
-```sql
--- Replace placeholder with NULL
-UPDATE Jobs SET "Jan" = NULLIF("Jan", '--');
-
--- Clean and cast to integer
-UPDATE Jobs
-SET "Jan" = COALESCE(TRY_CAST(REPLACE("Jan", ',', '') AS INT), 0);
-
--- Rename column
-EXEC sp_rename 'dbo.Jobs.[_2024_Total]', 'Total_2024', 'COLUMN';
-```
+These dashboards demonstrate how proper data preparation directly improves the quality of insights.
 
 ---
 
-## 📊 Power BI Dashboards
+## 11. Academic & Practical Contribution
 
-Interactive dashboards were built for both tasks to visualise the cleaned data:
+This project demonstrates:
 
-| Dashboard | Dataset | Focus |
-|-----------|---------|-------|
-| Task 01 | National Passenger Travel | Transport mode trends over time |
-| Task 02 | Jobs / Employment | Provincial employment statistics — 2024 |
+* Practical application of SQL in data cleaning
+* Understanding of real-world data issues
+* Ability to transform raw data into structured formats
+* Data visualization and storytelling using Power BI
+* End-to-end data analysis workflow
 
-> 📌 Open `.pbix` files using **Microsoft Power BI Desktop** (free download at [powerbi.microsoft.com](https://powerbi.microsoft.com))
+It serves as a strong foundation for roles in:
 
----
-
-## 🛠️ Technologies & Skills Demonstrated
-
-| Skill | Details |
-|-------|---------|
-| **T-SQL / SQL Server** | Data cleaning, NULL handling, type casting, schema modification |
-| **Power BI** | Dashboard design, data modelling, interactive reports |
-| **Data Wrangling** | Handling real-world messy data (missing values, wrong types, placeholders) |
-| **Teamwork** | Group assignment with peer evaluation |
+* Data Analysis
+* Business Intelligence
+* Data Engineering (entry-level)
 
 ---
 
-## 👥 Team — CodeCrushers
+## 12. Limitations
 
-> ADSC41 · 1st Year, 2nd Semester
+* Data cleaning rules were applied based on assumptions due to lack of metadata
+* No automation pipeline (manual execution required)
+* Limited dataset size for deeper predictive analysis
+* No integration with live or streaming data sources
 
 ---
 
-## 📄 License
+## 13. Future Improvements
 
-This project was created for academic purposes as part of the ADSC41 coursework.
+* Automating the ETL process
+* Integrating real-time or larger datasets
+* Adding advanced analytics or forecasting models
+* Enhancing dashboard interactivity
+* Connecting to cloud-based data platforms
+
+---
+
+## 14. Team
+
+**CodeCrushers**
+ADSC41 - 1st Year, 2nd Semester
+
